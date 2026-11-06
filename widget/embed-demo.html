@@ -21,6 +21,15 @@
   </div>
 
   <!-- Embeddable AI Support Widget Script -->
-  <script src="widget.js" data-key="pk_live_demo123456" data-api="http://localhost:8000"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const key = urlParams.get('key') || 'pk_live_c606cbb5b1964457';
+    const script = document.createElement('script');
+    script.src = '/widget.js';
+    script.setAttribute('data-key', key);
+    script.setAttribute('data-api', window.location.origin);
+    document.body.appendChild(script);
+  </script>
 </body>
 </html>
+

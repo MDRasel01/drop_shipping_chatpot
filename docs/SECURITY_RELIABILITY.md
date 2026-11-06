@@ -42,3 +42,4 @@ To mathematically prove zero cross-tenant data leakage, the test suite executes 
 
 ### 3.2 Redis Persistence
 - **AOF (Append-Only File):** Configured with `appendfsync everysec` for durable message queue state and active conversation session tracking.
+

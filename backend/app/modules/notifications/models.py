@@ -1,15 +1,14 @@
 import uuid
 from datetime import datetime, timezone
-from sqlalchemy import Column, String, Text, DateTime, ForeignKey
-from sqlalchemy.dialects.postgresql import UUID, JSONB
+from sqlalchemy import Column, String, Text, DateTime, ForeignKey, Uuid, JSON
 from app.core.database import Base
 
 
 class Notification(Base):
     __tablename__ = "notifications"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    tenant_id = Column(UUID(as_uuid=True), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, index=True)
+    id = Column(Uuid, primary_key=True, default=uuid.uuid4)
+    tenant_id = Column(Uuid, ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, index=True)
     recipient_id = Column(String(100), nullable=False, index=True)
     category = Column(String(50), nullable=False)  # AUTH, BILLING, SUPPORT, KNOWLEDGE, SYSTEM
     severity = Column(String(20), nullable=False, default="INFO")  # INFO, SUCCESS, WARNING, CRITICAL
@@ -25,7 +24,7 @@ class Notification(Base):
 class NotificationTemplate(Base):
     __tablename__ = "notification_templates"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(Uuid, primary_key=True, default=uuid.uuid4)
     template_code = Column(String(100), nullable=False, index=True)
     language = Column(String(10), nullable=False, default="en")
     channel = Column(String(30), nullable=False, default="EMAIL")

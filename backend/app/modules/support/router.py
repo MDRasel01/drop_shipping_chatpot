@@ -47,6 +47,21 @@ async def get_widget_config(
     )
 
 
+@router.get("/support/widget/tenant")
+async def get_tenant_widget(
+    tenant_id: uuid.UUID = Query(...),
+    db: AsyncSession = Depends(get_db)
+):
+    """Retrieves or provisions the widget installation and keys for a tenant."""
+    widget = await support_service.get_or_create_widget(db, tenant_id)
+    return {
+        "tenant_id": str(widget.tenant_id),
+        "public_key": widget.public_key,
+        "theme_color": widget.theme_color,
+        "allowed_origins": widget.allowed_origins
+    }
+
+
 @router.post("/chat/session", response_model=SessionTokenResponse)
 async def init_chat_session(
     request: SessionInitRequest,

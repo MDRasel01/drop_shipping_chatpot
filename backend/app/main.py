@@ -1,6 +1,9 @@
+import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 from app.api.v1.router import api_v1_router
 from app.core.config import settings
@@ -45,6 +48,14 @@ app.add_middleware(
 )
 
 app.include_router(api_v1_router, prefix=settings.API_V1_PREFIX)
+
+widget_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "widget")
+if os.path.exists(widget_dir):
+    app.mount("/static/widget", StaticFiles(directory=widget_dir), name="widget")
+
+    @app.get("/widget.js", include_in_schema=False)
+    async def serve_widget_js():
+        return FileResponse(os.path.join(widget_dir, "widget.js"), media_type="application/javascript")
 
 
 @app.get("/health", tags=["Health"])

@@ -16,8 +16,16 @@ export default function WidgetEmbedPage() {
 
   useEffect(() => {
     const tenantId = localStorage.getItem('tenant_id');
-    // Fetch widget config if available
-    setPublicKey(`pk_live_${(tenantId || 'demo').replace(/-/g, '').slice(0, 16)}`);
+    if (tenantId) {
+      fetch(`/api/v1/support/widget/tenant?tenant_id=${tenantId}`)
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          if (data && data.public_key) {
+            setPublicKey(data.public_key);
+          }
+        })
+        .catch(() => {});
+    }
   }, []);
 
   const embedCode = `<script src="http://localhost:8000/widget.js" data-key="${publicKey}" async></script>`;
@@ -165,3 +173,4 @@ export default function WidgetEmbedPage() {
     </div>
   );
 }
+

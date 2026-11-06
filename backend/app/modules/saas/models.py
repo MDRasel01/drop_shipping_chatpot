@@ -1,7 +1,6 @@
 import uuid
 from datetime import datetime, timezone
-from sqlalchemy import Column, String, Boolean, Integer, DateTime, ForeignKey, Text
-from sqlalchemy.dialects.postgresql import UUID, JSONB
+from sqlalchemy import Column, String, Boolean, Integer, DateTime, ForeignKey, Text, JSON, Uuid
 from sqlalchemy.orm import relationship
 from app.core.database import Base
 
@@ -9,7 +8,7 @@ from app.core.database import Base
 class Tenant(Base):
     __tablename__ = "tenants"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(Uuid, primary_key=True, default=uuid.uuid4)
     name = Column(String(255), nullable=False)
     slug = Column(String(100), unique=True, nullable=False, index=True)
     status = Column(String(50), nullable=False, default="active", index=True)  # active, suspended, deleted
@@ -27,11 +26,11 @@ class Tenant(Base):
 class TenantSetting(Base):
     __tablename__ = "tenant_settings"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    tenant_id = Column(UUID(as_uuid=True), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, unique=True, index=True)
+    id = Column(Uuid, primary_key=True, default=uuid.uuid4)
+    tenant_id = Column(Uuid, ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, unique=True, index=True)
     primary_color = Column(String(20), nullable=False, default="#2563eb")
     welcome_message = Column(Text, nullable=False, default="Hello! How can I assist you today?")
-    allowed_domains = Column(JSONB, nullable=False, default=list)
+    allowed_domains = Column(JSON, nullable=False, default=list)
     created_at = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
 
     tenant = relationship("Tenant", back_populates="settings")
@@ -40,8 +39,8 @@ class TenantSetting(Base):
 class User(Base):
     __tablename__ = "users"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    tenant_id = Column(UUID(as_uuid=True), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, index=True)
+    id = Column(Uuid, primary_key=True, default=uuid.uuid4)
+    tenant_id = Column(Uuid, ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, index=True)
     email = Column(String(255), unique=True, nullable=False, index=True)
     hashed_password = Column(String(255), nullable=False)
     full_name = Column(String(255), nullable=False)
@@ -55,7 +54,7 @@ class User(Base):
 class SubscriptionPlan(Base):
     __tablename__ = "subscription_plans"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(Uuid, primary_key=True, default=uuid.uuid4)
     code = Column(String(50), unique=True, nullable=False, index=True)  # Starter, Pro, Business, Enterprise
     name = Column(String(100), nullable=False)
     max_messages_monthly = Column(Integer, nullable=False)
@@ -67,8 +66,8 @@ class SubscriptionPlan(Base):
 class Subscription(Base):
     __tablename__ = "subscriptions"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    tenant_id = Column(UUID(as_uuid=True), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, unique=True, index=True)
+    id = Column(Uuid, primary_key=True, default=uuid.uuid4)
+    tenant_id = Column(Uuid, ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, unique=True, index=True)
     plan_code = Column(String(50), nullable=False, default="Starter")
     status = Column(String(50), nullable=False, default="active")  # active, trailing, past_due, canceled
     started_at = Column(DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
@@ -80,8 +79,8 @@ class Subscription(Base):
 class UsageCounter(Base):
     __tablename__ = "usage_counters"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    tenant_id = Column(UUID(as_uuid=True), ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, unique=True, index=True)
+    id = Column(Uuid, primary_key=True, default=uuid.uuid4)
+    tenant_id = Column(Uuid, ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False, unique=True, index=True)
     current_messages_used = Column(Integer, nullable=False, default=0)
     max_messages_limit = Column(Integer, nullable=False, default=10000)
     total_tokens_consumed = Column(Integer, nullable=False, default=0)

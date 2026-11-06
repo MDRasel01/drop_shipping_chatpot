@@ -58,3 +58,4 @@ docker compose logs -f backend
 - **Liveness Probe:** `GET /health` -> Returns `HTTP 200 OK` when the FastAPI server is running.
 - **Readiness Probe:** `GET /api/v1/health/aggregated` -> Verifies live connectivity to PostgreSQL database and Redis before directing customer traffic to the pod.
 - **Graceful Shutdown:** Implements 30-second SIGTERM drain allowing in-flight Gemini API responses and active chat turns to complete.
+

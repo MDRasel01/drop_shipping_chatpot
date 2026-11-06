@@ -156,3 +156,4 @@
     list.scrollTop = list.scrollHeight;
   }
 })();
+
