@@ -25,6 +25,7 @@ export default function DashboardLayout({
 
   const navItems = [
     { label: 'Overview', href: '/dashboard', icon: '📊' },
+    { label: 'Chatbots', href: '/dashboard/chatbots', icon: '🤖', isNew: true },
     { label: 'Knowledge & Instructions', href: '/dashboard/instructions', icon: '📝' },
     { label: 'Unknown Questions', href: '/dashboard/questions', icon: '❓' },
     { label: 'Widget & Embed', href: '/dashboard/widget', icon: '💬' },
@@ -56,14 +57,21 @@ export default function DashboardLayout({
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-3 rounded-lg px-3.5 py-2.5 text-sm font-semibold transition-colors ${
+                  className={`flex items-center justify-between rounded-lg px-3.5 py-2.5 text-sm font-semibold transition-colors ${
                     active
                       ? 'bg-blue-50 text-blue-700'
                       : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
                   }`}
                 >
-                  <span className="text-base">{item.icon}</span>
-                  {item.label}
+                  <div className="flex items-center gap-3">
+                    <span className="text-base">{item.icon}</span>
+                    <span>{item.label}</span>
+                  </div>
+                  {item.isNew && (
+                    <span className="rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-bold text-blue-700">
+                      Pool
+                    </span>
+                  )}
                 </Link>
               );
             })}
