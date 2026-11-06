@@ -12,7 +12,7 @@ interface Chatbot {
   welcome_message: string;
   system_instructions?: string;
   status: string;
-  is_active: bool;
+  is_active: boolean;
   max_capacity: number;
   active_conversations: number;
   available_capacity: number;
