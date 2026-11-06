@@ -225,3 +225,4 @@ class ChatbotSchedulerService:
 
 
 chatbot_scheduler = ChatbotSchedulerService()
+
