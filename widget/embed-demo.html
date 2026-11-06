@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Customer Test Website - AI Support Widget Demo</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f1f5f9; margin: 0; padding: 40px; }
+    .card { max-width: 650px; margin: 60px auto; background: white; padding: 32px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0; }
+    h1 { color: #0f172a; margin-top: 0; }
+    p { color: #475569; line-height: 1.6; }
+    .badge { display: inline-block; background: #dbeafe; color: #1e40af; padding: 4px 10px; border-radius: 9999px; font-size: 12px; font-weight: 600; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <span class="badge">Live Test Website</span>
+    <h1>Apex Global Logistics</h1>
+    <p>Welcome to our online portal. We ship globally with guaranteed 3-5 day delivery and 30-day return windows.</p>
+    <p>Look at the bottom right corner of this page to interact with the <strong>AI Support Chat Widget</strong> powered by Google Gemini API & pgvector.</p>
+  </div>
+
+  <!-- Embeddable AI Support Widget Script -->
+  <script src="widget.js" data-key="pk_live_demo123456" data-api="http://localhost:8000"></script>
+</body>
+</html>
